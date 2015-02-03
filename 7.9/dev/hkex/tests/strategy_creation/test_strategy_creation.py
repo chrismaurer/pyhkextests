@@ -17,9 +17,11 @@ class TestTailorMadeCombinations(BaseTestStrategyCreation):
         mf_option_config.depth = 0
         self.supported_intra_prod_strategies = (Strategy.NSC_TWO_LEGS,
                                                 Strategy.NSC_THREE_LEGS,
-                                                Strategy.NSC_FOUR_LEGS)
+                                                Strategy.NSC_FOUR_LEGS,
+                                                Strategy.COVERED,
+                                                Strategy.COVERED_TWO_FUT_LEGS)
         self.leg_mf_config = mf_option_config
         self.strat_creation_mf_config = mf_multi_leg_config
         self.post_creation_pause = 20
-        self.intra_prod_product_names = (('JGBL', 'NK225', 'TOPIX'))
+        self.intra_prod_product_names = (('HHI', 'HSI', 'MHI', 'MSA', 'MSB', 'HKE', 'HKG', 'STC'))
         self.exclude_scenarios = ['create_inverted_strategy_exch_reject']
