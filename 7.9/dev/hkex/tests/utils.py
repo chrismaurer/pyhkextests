@@ -70,8 +70,7 @@ mf_config.useCache = True
 mf_config.fixLotQty = False
 mf_config.failPatterns = [re.compile('.*Illegal transaction at this time.*'),
                           re.compile('.*time validity not allowed.*'),
-                          re.compile('.*could not find series.*'),
-                          re.compile('.*The series is not traded in Genium INET Trading.*')]
+                          re.compile('.*could not find series.*')]
 mf_config.acceptable_reject_messages = ['No qty filled or placed in order book; EX: omniapi_tx_ex() returned 0 with txstat 1',
                                         'EX: transaction aborted (Order-book volume was too low to fill order.)',
                                         'GTDate orders cannot be FOK or IOC.']
@@ -96,15 +95,13 @@ ProductGroup.FUTURE.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', '
                               'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
                               'HUT', 'LRA', 'LRC', 'LRZ'])
 ProductGroup.FSPREAD.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', 'CHH', 'BOV',
-                              'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
-                              'HUT', 'LRA', 'LRC', 'LRZ'])
-ProductGroup.OPTION.register(['HSI', 'HHI', 'MHI'])
-ProductGroup.OSTRATEGY.register(['HSI', 'HHI', 'MHI'])
+                               'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
+                               'HUT', 'LRA', 'LRC', 'LRZ'])
 
 futures_filter = [ProductType.FUTURE, ContractFilter.TRADABLE, ProductGroup.FUTURE]
 fspread_filter = [ProductType.FSPREAD, ContractFilter.TRADABLE, ProductGroup.FSPREAD]
-option_filter = [ProductType.OPTION, ContractFilter.TRADABLE]#, ProductGroup.OPTION]
-ostrategy_filter = [ProductType.OSTRATEGY, ContractFilter.TRADABLE]#, ProductGroup.OSTRATEGY]
+option_filter = [ProductType.OPTION, ContractFilter.TRADABLE]
+ostrategy_filter = [ProductType.OSTRATEGY, ContractFilter.TRADABLE]
 outrights = [ProductType.OUTRIGHT, ContractFilter.TRADABLE]
 intra_prod_mleg = [ProductType.INTRA_PROD_MULTI_LEG, ContractFilter.TRADABLE]
 inter_prod_mleg = [ProductType.INTER_PROD_MULTI_LEG, ContractFilter.TRADABLE]
