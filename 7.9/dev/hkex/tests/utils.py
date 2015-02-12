@@ -93,10 +93,10 @@ mf_strat_creation_config.createLTP = True
 
 ProductGroup.FUTURE.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', 'CHH', 'BOV',
                               'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
-                              'HUT', 'LRA', 'LRC', 'LRZ'])
+                              'LRA', 'LRC', 'LRZ'])
 ProductGroup.FSPREAD.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', 'CHH', 'BOV',
                                'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
-                               'HUT', 'LRA', 'LRC', 'LRZ'])
+                               'LRA', 'LRC', 'LRZ'])
 
 futures_filter = [ProductType.FUTURE, ContractFilter.TRADABLE, ProductGroup.FUTURE]
 fspread_filter = [ProductType.FSPREAD, ContractFilter.TRADABLE, ProductGroup.FSPREAD]
