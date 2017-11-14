@@ -1,4 +1,4 @@
-from basis_validation import *#basis_order_conditions, basis_order_roundtrip
+from basis_validation import basis_order_conditions, basis_order_roundtrip
 
 import roundtrip_rules as hkex_order_roundtrip
 import conditions as hkex_order_conditions
@@ -20,13 +20,6 @@ def setup_order(order_table):
     pprint( dir( order.conditions ) )
     '''
 
-    core_enums_table = order_table.get_rule('roundtrip').get_rule('core_enums')
-    date_and_time_table = order_table.get_rule('roundtrip').get_rule('date_and_time')
-    ids_table = order_table.get_rule('roundtrip').get_rule('ids')
-    misc_table = order_table.get_rule('roundtrip').get_rule('misc')
-    prices_table = order_table.get_rule('roundtrip').get_rule('prices')
-    quantities_table = order_table.get_rule('roundtrip').get_rule('quantities')
-
     ##################
     # ## Conditions ##
     ##################
@@ -44,9 +37,15 @@ def setup_order(order_table):
     order_table.add_condition(basis_order_conditions.is_going_to_be_immediately_partially_filled)
     order_table.add_condition(basis_order_conditions.is_going_to_be_immediately_triggered)
 
+    ##################
+    # ## Core Enums ##
+    ##################
+    core_enums_table = order_table.get_rule('roundtrip').get_rule('core_enums')
+
     #####################
     # ## Date and Time ##
     #####################
+    date_and_time_table = order_table.get_rule('roundtrip').get_rule('date_and_time')
 
     date_and_time_table.optout_rule('time_exch_is_exchange_time', 'True',
                                     'time_exch_is_zero', 'time_exch is not filled in')
@@ -56,6 +55,7 @@ def setup_order(order_table):
     ##################
     # ##    Ids     ##
     ##################
+    ids_table = order_table.get_rule('roundtrip').get_rule('ids')
 
     # exchange_order_id
     ids_table.add_rule(basis_order_roundtrip.exchange_order_id_is_empty, cond='is_order_status_hold')
@@ -86,6 +86,7 @@ def setup_order(order_table):
     ##################
     # ##    Misc    ##
     ##################
+    misc_table = order_table.get_rule('roundtrip').get_rule('misc')
 
     # exchange_credentials
     misc_table.replace_rule('exchange_credentials_is_populated',
@@ -96,6 +97,7 @@ def setup_order(order_table):
     ##################
     # ##   Prices   ##
     ##################
+    prices_table = order_table.get_rule('roundtrip').get_rule('prices')
 
     prices_table.append_condition('limit_prc_is_limit_prc_sent', 'not is_order_action_delete')
     prices_table.append_condition('limit_prc_is_limit_prc_book', 'is_order_action_delete')
@@ -103,6 +105,7 @@ def setup_order(order_table):
     ##################
     # ## Quantities ##
     ##################
+    quantities_table = order_table.get_rule('roundtrip').get_rule('quantities')
 
     # chg_qty
     quantities_table.append_condition('chg_qty_is_zero',

@@ -124,11 +124,16 @@ def get_market_finder_config(order_info):
     mf_config.depth = 5
     mf_config.maxTriesPerProduct = 5
     mf_config.useCache = True
+    mf_config.fixLotQty = False
+    mf_config.useDefaultBestPriceFirst = True
+    mf_config.defaultBestPrice = 8000
     mf_config.failPatterns = [re.compile('.*Illegal transaction at this time.*'),
                               re.compile('.*time validity not allowed.*'),
-                              re.compile('.*could not find series.*')]
-    mf_config.prcPatterns = [re.compile('Given premium is not allowed'),
-                             re.compile('Invalid price')]
+                              re.compile('.*could not find series.*'),
+                              re.compile('.*Given premium is not allowed.*')]
+    mf_config.prcPatterns = [re.compile('Invalid price')]
+#    mf_config.prcPatterns = [re.compile('Given premium is not allowed'),
+#                             re.compile('Invalid price')]
     mf_config.acceptable_reject_messages = ['No qty filled or placed in order book; EX: omniapi_tx_ex() returned 0 with txstat 1',
                                             'EX: transaction aborted (Order-book volume was too low to fill order.)',
                                             'GTDate orders cannot be FOK or IOC.']
@@ -136,14 +141,14 @@ def get_market_finder_config(order_info):
     if order_info.prod_type == ProductType.OPTION:
         mf_config.maxTriesPerProduct = 120
         mf_config.useDefaultBestPriceFirst = True
-        mf_config.defaultBestPrice = 5.00
+        mf_config.defaultBestPrice = 5
         return mf_config
     if order_info.prod_type == ProductType.FSPREAD or \
     order_info.prod_type == ProductType.OSTRATEGY or \
     order_info.prod_type == ProductType.MULTI_LEG:
         mf_config.maxTriesPerProduct = 80
         mf_config.useDefaultBestPriceFirst = True
-        mf_config.defaultBestPrice = 1.00
+        mf_config.defaultBestPrice = 5
         mf_config.ignoreLegs = True
         return mf_config
     if order_info.mod == OrderMod.STOP:

@@ -63,33 +63,43 @@ bounds_20_50 = PositiveIntegerBounds(20,50)
 
 mf_config = MarketFinderConfigData()
 mf_config.timeout = 500
-mf_config.depth = 5
+mf_config.depth = 4
 mf_config.maxTriesPerProduct = 5
-mf_config.preferBackMonth = True
 mf_config.useCache = True
 mf_config.fixLotQty = False
+mf_config.useDefaultBestPriceFirst = True
+mf_config.defaultBestPrice = 8000
 mf_config.failPatterns = [re.compile('.*Illegal transaction at this time.*'),
                           re.compile('.*time validity not allowed.*'),
-                          re.compile('.*could not find series.*')]
+                          re.compile('.*could not find series.*'),
+                          re.compile('.*Given premium is not allowed.*')]
 mf_config.acceptable_reject_messages = ['No qty filled or placed in order book; EX: omniapi_tx_ex() returned 0 with txstat 1',
                                         'EX: transaction aborted (Order-book volume was too low to fill order.)',
                                         'GTDate orders cannot be FOK or IOC.']
 
 mf_option_config = deepcopy(mf_config)
 mf_option_config.maxTriesPerProduct = 120
-mf_option_config.useDefaultBestPriceFirst = True
-mf_option_config.defaultBestPrice = 5.00
+mf_option_config.useDefaultBestPriceFirst = False
+mf_option_config.defaultBestPrice = 5
 
 mf_multi_leg_config = deepcopy(mf_config)
 mf_multi_leg_config.maxTriesPerProduct = 80
 mf_multi_leg_config.useDefaultBestPriceFirst = True
-mf_multi_leg_config.defaultBestPrice = 1.00
+mf_multi_leg_config.defaultBestPrice = 5
 mf_multi_leg_config.ignoreLegs = True
 
 mf_strat_creation_config = MarketFinderConfigData()
 mf_strat_creation_config.maxTriesPerProduct = 10
-mf_strat_creation_config.defaultBestPrice = 25.0
+mf_strat_creation_config.defaultBestPrice = 25
 mf_strat_creation_config.createLTP = True
+
+pred = ProductComparison((('prod_chr', in_, ['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', 'CHH', 'BOV',
+                                             'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
+                                             'LRA', 'LRC', 'LRZ']),))
+option_pred = ProductComparison((('prod_chr', in_, ['HSI', 'HHI', 'MHI', 'MCH', 'CHH']),))
+ProductType.FUTURE.register(ProductType.FUTURE.value + pred)
+ProductType.FSPREAD.register(ProductType.FSPREAD.value + pred)
+ProductType.OPTION.register(ProductType.OPTION.value + option_pred)
 
 ProductGroup.FUTURE.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', 'CHH', 'BOV',
                               'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
@@ -97,11 +107,13 @@ ProductGroup.FUTURE.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', '
 ProductGroup.FSPREAD.register(['HSI', 'HHI', 'MHI', 'MCH', 'DHS', 'DHH', 'VHS', 'CHH', 'BOV',
                                'MCX', 'BSE', 'SAF', 'CUS', 'HB1', 'HB3', 'EF3', 'GLD',
                                'LRA', 'LRC', 'LRZ'])
+# ProductGroup.OPTION.register(['MCH', ])
+#ProductGroup.OSTRATEGY.register(['HSI', 'HHI', 'MHI'])
 
 futures_filter = [ProductType.FUTURE, ContractFilter.TRADABLE, ProductGroup.FUTURE]
 fspread_filter = [ProductType.FSPREAD, ContractFilter.TRADABLE, ProductGroup.FSPREAD]
-option_filter = [ProductType.OPTION, ContractFilter.TRADABLE]
-ostrategy_filter = [ProductType.OSTRATEGY, ContractFilter.TRADABLE]
+option_filter = [ProductType.OPTION, ContractFilter.TRADABLE]#, ProductGroup.OPTION]
+ostrategy_filter = [ProductType.OSTRATEGY, ContractFilter.TRADABLE]#, ProductGroup.OSTRATEGY]
 outrights = [ProductType.OUTRIGHT, ContractFilter.TRADABLE]
 intra_prod_mleg = [ProductType.INTRA_PROD_MULTI_LEG, ContractFilter.TRADABLE]
 inter_prod_mleg = [ProductType.INTER_PROD_MULTI_LEG, ContractFilter.TRADABLE]
@@ -234,7 +246,7 @@ Strategy.INVALID.register({'legs':[StrategyLeg(base_preds=option_call_preds,
                            'tt_prod_type':aenums.TT_PROD_OSTRATEGY,
                            'tt_strategy_code':aenums.TT_TAILOR_MADE_COMB_ID})
 Messages.SERIES_CREATE_SUCCESS.register('Spread/Strategy created successfully')
-Messages.SERIES_CREATE_REJECT.register(r'DC3, EX: transaction aborted (Illegal ratio between the legs.)')
+Messages.SERIES_CREATE_REJECT.register('DC3, EX: transaction aborted \(Illegal ratio between the legs\.\)')
 Messages.SERIES_CREATE_INVERT_REJECT.register('You made a poopy strategy!')
 
 ###################################

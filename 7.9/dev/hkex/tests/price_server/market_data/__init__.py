@@ -1,6 +1,2 @@
-import test_exch_aggregate_depth_futures
-import test_exch_aggregate_depth_multilegs
-import test_exch_aggregate_depth_options
-import test_exch_inside_market_futures
-import test_exch_inside_market_multilegs
-import test_exch_inside_market_options
+import test_exch_aggregate_depth
+import test_exch_inside_market

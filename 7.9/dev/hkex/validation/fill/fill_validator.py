@@ -26,9 +26,9 @@ def setup_fill(fill_table):
     ###########
     # ## IDs ##
     ###########
-    
-    ids_table.add_rule(tmx_transaction_identifier_is_empty_or_not)
-    ids_table.override_rule('transaction_identifier_is_not_empty', 'True', None,note='Running tmx_transaction_identifier_is_empty_or_not',)
+
+#    ids_table.add_rule(tmx_transaction_identifier_is_empty_or_not)
+#    ids_table.override_rule('transaction_identifier_is_not_empty', 'True', None,note='Running tmx_transaction_identifier_is_empty_or_not',)
 #    ids_table.optout_rule('legs_transaction_identifier_is_empty', 'True', None, note='Running order_feed_and_fill_feed_transaction_no instead')
 #    ids_table.optout_rule('non_legs_transaction_identifier_is_not_empty', 'True', None, note='Running order_feed_and_fill_feed_transaction_no instead')
 #    ids_table.add_rule(order_feed_and_fill_feed_transaction_no, cond='True')

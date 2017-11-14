@@ -7,7 +7,7 @@ from ttapi.client import pythonify
 from captain import implements, scope, interface, Action, Context, OrderContext, create_context
 from captain.lib import Override, PriceQuantityChange, SetExpectedNonTradeDataFromFills,\
                         WaitForLastPricesOnTradeDataUpdateNoDuplicateCallbackCheck,\
-                        WaitForOrderStatus, WaitForDirectTradeDataIgnoreOtherCallbacks
+                        WaitForOrderStatus
 from pyrate.manager import Manager
 
 # CommonTests Imports
@@ -161,4 +161,3 @@ class OMAPISetExpectedNonTradeDataFromFills(SetExpectedNonTradeDataFromFills):
 
 #HKExOverrides.append(Override(OMAPISetExpectedNonTradeDataFromFills))
 HKExOverrides.append(Override(WaitForLastPricesOnTradeDataUpdateNoDuplicateCallbackCheck))
-HKExOverrides.append(Override(WaitForDirectTradeDataIgnoreOtherCallbacks))

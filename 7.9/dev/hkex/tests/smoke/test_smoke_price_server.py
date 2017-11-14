@@ -30,6 +30,7 @@ class TestAggMarketSmoke(BaseTestAggregateDepthSmoke):
         self.market_config_and_filters = [(mf_config, [futures_filter])]
 
         self.visible_levels = 5
+        self.restart_timeout = 480
         self.overrides=HKExOverrides
 
 class TestInsideMarketSmoke(BaseInsideMarketDepthSmoke):
@@ -46,6 +47,7 @@ class TestInsideMarketSmoke(BaseInsideMarketDepthSmoke):
         self.market_config_and_filters = [(mf_config, [futures_filter])]
 
         self.if_proxy = False
+        self.restart_timeout = 480
         self.overrides=HKExOverrides
 
 class TestNTDTimeAndSalesFuturesSmoke(BaseTestNTDTimeAndSalesSmoke):
@@ -58,7 +60,7 @@ class TestNTDTimeAndSalesFuturesSmoke(BaseTestNTDTimeAndSalesSmoke):
         self.market_config_and_filters = [(mf_config, [futures_filter])]
 
         self.accumulate_ltq = False
-        self.restart_timeout = 300
+        self.restart_timeout = 480
         self.overrides = HKExOverrides
 
 class TestVAPSmoke(BaseTestVapSmoke):
@@ -71,4 +73,5 @@ class TestVAPSmoke(BaseTestVapSmoke):
         self.market_config_and_filters = [(mf_config, [futures_filter])]
 
         self.accumulate_ltq = False
+        self.restart_timeout = 480
         self.overrides = HKExOverrides

@@ -17,21 +17,26 @@ def is_gateway_reject(action, before, after):
     This is your gateway reject function to fill in
     """
     if after.pending.order_status != aenums.TT_ORDER_STATUS_REJECTED:
+        print '*'*80 + '\n 1 \n' + '*'*80
         return False
 
     if before.order_session.feed_down:
+        print '*'*80 + '\n 2 \n' + '*'*80
         return True
 
     if before.pending.order_action == aenums.TT_ORDER_ACTION_INQUIRE:
+        print '*'*80 + '\n 3 \n' + '*'*80
         return True
 
     if before.pending.order_action == aenums.TT_ORDER_ACTION_HOLD and \
        before.book.order_status == aenums.TT_ORDER_STATUS_HOLD:
+        print '*'*80 + '\n 4 \n' + '*'*80
         return True
 
     if before.pending.order_type == aenums.TT_LIMIT_ORDER and \
        before.pending.limit_prc == cppclient.TT_INVALID_PRICE and \
        after.order_callbacks[-1].message == 'Invalid price.':
+        print '*'*80 + '\n 5 \n' + '*'*80
         return True
 
     if before.pending.acct_type in [aenums.TT_ACCT_GIVEUP_1,
@@ -39,6 +44,7 @@ def is_gateway_reject(action, before, after):
                                     aenums.TT_ACCT_UNALLOCATED_1,
                                     aenums.TT_ACCT_UNALLOCATED_2] and \
        before.pending.clearing_mbr == '':
+        print '*'*80 + '\n 6 \n' + '*'*80
         return True
 
     if before.pending.order_action in [aenums.TT_ORDER_ACTION_ADD,
@@ -54,28 +60,38 @@ def is_gateway_reject(action, before, after):
            before.pending.order_flags != aenums.TT_NO_ORDER_MOD or \
            before.pending.tif == 'GIS' or \
            after.pending.order_no == '':
+            print '*'*80 + '\n 7 \n' + '*'*80
             return True
 
     if before.pending.order_action not in [aenums.TT_ORDER_ACTION_ADD,
                                            aenums.TT_ORDER_ACTION_RESUBMIT]:
         if before.pending.order_no == 0 or after.pending.order_no < 999999:
+            print '*'*80 + '\n 8 \n' + '*'*80
+            print '\nbefore.pending.order_action =', str(before.pending.order_action)
+            print '\nbefore.pending.order_no =', str(before.pending.order_no)
+            print '\nafter.pending.order_no', str(after.pending.order_no)
+            print '*'*80 + '\n 8 \n' + '*'*80
             return True
 
     if before.pending.order_action == aenums.TT_ORDER_ACTION_DELETE and \
        before.book.order_action == aenums.TT_ORDER_ACTION_DELETE and \
        before.book.order_status == aenums.TT_ORDER_STATUS_OK:
+        print '*'*80 + '\n 9 \n' + '*'*80
         return True
 
     if before.pending.order_status == aenums.TT_ORDER_STATUS_HOLD and \
        before.pending.order_action != aenums.TT_ORDER_ACTION_RESUBMIT:
+        print '*'*80 + '\n 10 \n' + '*'*80
         return True
 
     if before.pending.order_status == aenums.TT_ORDER_STATUS_OK and \
        before.pending.order_action == aenums.TT_ORDER_ACTION_RESUBMIT:
+        print '*'*80 + '\n 11 \n' + '*'*80
         return True
 
     if hasattr(action, 'order_status'):
         if action.order_status == 'Risk Reject':
+            print '*'*80 + '\n 12 \n' + '*'*80
             return True
 
     return False
